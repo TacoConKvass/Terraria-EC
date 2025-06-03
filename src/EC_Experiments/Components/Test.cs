@@ -1,5 +1,3 @@
-
-
 using EC.Core;
 using Microsoft.Xna.Framework;
 using Terraria;

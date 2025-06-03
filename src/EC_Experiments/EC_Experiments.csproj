@@ -10,7 +10,7 @@
 
 	<!-- References -->
 	<ItemGroup>
-		<Reference Include="../../../ModAssemblies/Daybreak_v1.2.1.dll" />
+		<Reference Include="../../../ModAssemblies/Daybreak_v1.3.0.dll" />
 	</ItemGroup>
 
 </Project>

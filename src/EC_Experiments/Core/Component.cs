@@ -1,33 +1,25 @@
-using rail;
-using Terraria.ID;
-using Terraria.ModLoader;
+using Terraria;
 
-namespace EC_Experiments.Core;
+namespace EC.Core;
 
-public class Component<T> {
-	public static string Name = nameof(T);
-
-	[ReinitializeDuringResizeArrays]
-	public static class Data {
-		public static T?[] Items = ItemID.Sets.Factory.CreateNamedSet($"EC/{Name}").RegisterCustomSet<T?>(default);
-		public static T?[] Projectiles = ProjectileID.Sets.Factory.CreateNamedSet($"EC/{Name}").RegisterCustomSet<T?>(default);
-		public static T?[] NPCs = NPCID.Sets.Factory.CreateNamedSet($"EC/{Name}").RegisterCustomSet<T?>(default);
+public class Component<T>
+	where T : struct 
+{
+	public static class State {
+		public static T[] NPCs = new T[Main.maxNPCs];
+		public static T[] Projectiles = new T[Main.maxProjectiles];
+		public static T[] Players = new T[Main.maxPlayers];
 	}
 
-	private bool enabled;
-
-	public bool Enabled => enabled;
-
-	public void SetEnabled(bool value) {
-		if (enabled != value) {
-			if (value) OnEnable();
-			else OnDisable();
-
-			enabled = value;
-		}
+	public static class Enabled {
+		public static bool[] NPCs = new bool[Main.maxNPCs];
+		public static bool[] Projectiles = new bool[Main.maxProjectiles];
+		public static bool[] Players = new bool[Main.maxPlayers];
 	}
+}
 
-	public void OnEnable() { }
-	
-	public void OnDisable() { }
+public static class EntityExtensions {
+	public static void SetEnabled<T>(this NPC npc, bool value) where T : struct {
+		Component<T>.Enabled.NPCs[npc.whoAmI] = value;
+	}
 }

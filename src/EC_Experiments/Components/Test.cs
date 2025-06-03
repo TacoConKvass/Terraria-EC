@@ -1,3 +1,5 @@
+
+
 using EC.Core;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -15,19 +17,19 @@ public class Test {
 	public static class Values {
 		public static ComponentData[] Items = ItemID.Sets.Factory.CreateNamedSet("EC/Test")
 			.Description("Test component - spawns Dust on target hit")
-			.RegisterCustomSet(new ComponentData(), 
+			.RegisterCustomSet(Invalid,
 				ItemID.CopperAxe, new ComponentData(DustID.Water, 20, new Vector2(20))
 			);
 
 		public static ComponentData[] Projectiles = ProjectileID.Sets.Factory.CreateNamedSet("EC/Test")
 			.Description("Test component - spawns Dust on target hit")
-			.RegisterCustomSet(new ComponentData(), 
+			.RegisterCustomSet(Invalid,
 				ProjectileID.Bullet, new ComponentData(DustID.Ice, 20, new Vector2(20))
 			);
 
 		public static ComponentData[] NPCs = NPCID.Sets.Factory.CreateNamedSet("EC/Test")
 			.Description("Test component - spawns Dust on target hit")
-			.RegisterCustomSet<ComponentData>(new());
+			.RegisterCustomSet<ComponentData>(Invalid);
 	}
 
 	public class Items : GlobalItem, IComponent<ComponentData> {
@@ -37,7 +39,7 @@ public class Test {
 
 		public override void SetDefaults(Item entity) {
 			Data = Values.Items[entity.type];
-			Enabled = (Data == new ComponentData());
+			Enabled = (Data != Invalid);
 		}
 
 		public override void OnHitNPC(Item item, Player player, NPC target, NPC.HitInfo hit, int damageDone) {
@@ -56,7 +58,7 @@ public class Test {
 
 		public override void SetDefaults(Projectile entity) {
 			Data = Values.Projectiles[entity.type];
-			Enabled = (Data == new ComponentData());
+			Enabled = (Data != Invalid);
 		}
 
 		public override void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) {
@@ -67,6 +69,7 @@ public class Test {
 			if (Enabled) Execute(Data, target.Center);
 		}
 	}
+
 	public class NPCs : GlobalNPC, IComponent<ComponentData> {
 		public override bool InstancePerEntity { get; } = true;
 		public ComponentData Data { get; set; }
@@ -74,7 +77,7 @@ public class Test {
 
 		public override void SetDefaults(NPC entity) {
 			Data = Values.NPCs[entity.type];
-			Enabled = (Data != new ComponentData());
+			Enabled = (Data != Invalid);
 		}
 
 		public override void OnHitNPC(NPC npc, NPC target, NPC.HitInfo hit) {
@@ -92,3 +95,4 @@ public class Test {
 		}
 	}
 }
+

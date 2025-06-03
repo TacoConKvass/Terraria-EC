@@ -5,3 +5,4 @@
 **/bin
 **/obj
 /src/EC_Experiments/EC_Experiments.csproj.user
+*.sln

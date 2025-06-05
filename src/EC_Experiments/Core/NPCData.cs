@@ -32,6 +32,7 @@ public class NPCData<T, TManager> : GlobalNPC
 
 	public void EnableWith(T data) {
 		Data = data;
+		Main.NewText(Data);
 		SetEnabled(true);
 	}
 }

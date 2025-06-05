@@ -9,21 +9,21 @@ namespace EC.Components;
 
 using Data = (int DustType, int Amount, Vector2 Range);
 
+public class Items : ItemData<Data, Manager> { }
+public class Projectiles : ProjectileData<Data, Manager> { }
+public class NPCs : NPCData<Data, Manager> { }
+public class Players : PlayerData<Data, Manager> { }
+
+public class Manager : Manager<Data> {
+	public override string ComponentName => "Test";
+	public override string ComponentDescription => "TestDesc";
+
+	public override object[] ItemInputs => [
+		ItemID.CopperAxe, new Data(DustID.GemTopaz, 10, Vector2.One * 20)
+	];
+}
+
 public class Test : ILoadable {
-	public class Items : ItemData<Data, Manager> { }
-	public class Projectiles : ProjectileData<Data, Manager> { }
-	public class NPCs : NPCData<Data, Manager> { }
-	public class Players : PlayerData<Data, Manager> { }
-
-	public class Manager : Manager<Data> { 
-		public override string ComponentName => "Test"; 
-		public override string ComponentDescription => "TestDesc";
-
-		public override object[] ItemInputs => [
-			ItemID.CopperAxe, new Data(DustID.GemTopaz, 10, Vector2.One * 20)
-		];
-	}
-
 	public void Load(Mod mod) {
 		GlobalItemHooks.OnHitNPC.Event += static (GlobalItem _, Item item, Player _, NPC target, NPC.HitInfo _, int _) => {
 			var component = item.GetGlobalItem<Items>();

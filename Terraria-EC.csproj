@@ -2,7 +2,6 @@
     <Import Project="..\tModLoader.targets" />
     
     <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
         <RootNamespace>EC</RootNamespace>
         <Nullable>enable</Nullable>
     </PropertyGroup>

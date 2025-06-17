@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Terraria;
 
 namespace EC.Core;
@@ -31,6 +32,14 @@ public static class EntityExtensions
 		component.Enabled = true;
 		return (T)component;
 	}
+
+	public static T Get<T>(this NPC entity) where T : NPCComponent => entity.GetGlobalNPC<T>();
+
+	public static T Get<T>(this Projectile entity) where T : ProjectileComponent => entity.GetGlobalProjectile<T>();
+
+	public static T Get<T>(this Item entity) where T : ItemComponent => entity.GetGlobalItem<T>();
+
+	public static T Get<T>(this Player entity) where T : PlayerComponent => entity.GetModPlayer<T>();
 
 	public static void Disable<T>(this NPC entity) where T : NPCComponent {
 		NPCComponent component = entity.GetGlobalNPC<T>();
